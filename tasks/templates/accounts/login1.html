@@ -1,0 +1,116 @@
+
+{% extends "layouts/base.html" %}
+
+{% block title %} Login {% endblock title %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<body onload="llenartip('{{ proyectos.tipuser }}')">
+
+    <div class="page-inner">
+        <div class="page-header">
+            <h4 class="page-title">Login</h4>
+            <ul class="breadcrumbs">
+                <li class="nav-home">
+                    <a href="#">
+                        <i class="flaticon-home"></i>
+                    </a>
+                </li>
+                <li class="separator">
+                    <i class="flaticon-right-arrow"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="#">Authentication</a>
+                </li>
+                <li class="separator">
+                    <i class="flaticon-right-arrow"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="#">Login</a>
+                </li>
+            </ul>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+
+                            {% if msg %}
+                                <span class="text-danger">{{ msg | safe }}</span>
+                            {% else %}
+                            <span>
+                                Agregar Credenciales
+                            </span>
+                            {% endif %}
+
+                        </div>
+                    </div>
+
+                    <form method="post" action="" style="background-color: rgb(46, 54, 63);">
+
+                        {% csrf_token %}
+                        
+                        <input type="hidden" id="tipuser" name="tipuser"/>
+
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6 col-lg-4">
+
+                                    <div class="form-group">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="icon-user"></i>
+                                                </span>
+                                            </div>
+                                            {{ form.username }}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend cursor-pointer" onclick="mospsw('password','pweye')">
+                                                <span class="input-group-text">
+                                                    <i id="pweye" class="fa fa-eye-slash" style="cursor: pointer;"></i>
+                                                </span>
+                                            </div>
+                                            {{ form.password }}
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-action" style="color: rgb(212, 197, 197);">
+                            <button type="submit" class="btn btn-success">Enviar</button>   
+                            &nbsp; &nbsp;
+                            <a href="/register/{{ proyectos.tipuser }}"  style="color: rgb(93, 155, 214);font-weight: bold;">Recuperar contraseña</a>
+                        {% if proyectos.tipuser == 'per' %}    
+                            &nbsp; &nbsp;
+                            <span>Si no está registrado,</span> por favor <a href="/register/{{ proyectos.tipuser }}"  style="color: rgb(93, 155, 214);font-weight: bold;">Registrese</a>
+                        {% endif %}
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}
+<script src="/static/js/plugin/classList.min.js"></script>
+<script src="/static/js/plugin/apifetch.js"></script>
+{% endblock javascripts %}
+
+
+

@@ -1,0 +1,75 @@
+{% extends "tasks/base.html" %}
+
+{% block content %}
+
+<h1>Signin</h1>
+
+<p>
+{{error}}
+</p>
+
+<form method="POST" id="frmconvert" enctype="multipart/form-data">
+    
+    <fieldset>
+        <legend>Select a maintenance drone:</legend>
+
+        <div>
+            <input type="radio" id="huey" name="drone" value="huey" checked />
+            <label for="huey">Huey</label>
+        </div>
+
+        <div>
+            <input type="radio" id="dewey" name="drone" value="dewey" />
+            <label for="dewey">Dewey</label>
+        </div>
+
+        <div>
+            <input type="radio" id="louie" name="drone" value="louie" />
+            <label for="louie">Louie</label>
+        </div>
+</fieldset>
+    
+    <label for="directorio">Seleccione el archivo:</label>
+    <input type="file" id="directorio" name="directorio">
+    
+</form>
+
+<pre id="log"></pre>
+
+{% endblock %}
+
+{% block javascript %}
+
+<script>
+const form = document.querySelector("form");
+const log = document.querySelector("#log");
+const elem = document.createElement("input");
+
+elem.type = "file";
+elem.addEventListener("cancel", () => {
+  console.log("Cancelled.");
+});
+elem.addEventListener("change", () => {
+  if (elem.files.length == 1) {
+    console.log("File selected: ", elem.files[0]);
+  }
+});
+elem.click();
+
+form.addEventListener(
+  "submit",
+  (event) => {
+    const data = new FormData(form);
+    let output = "";
+    for (const entry of data) {
+      output = `${output}${entry[0]}=${entry[1]}\r`;
+    }
+    log.innerText = output;
+    event.preventDefault();
+  },
+  false,
+);
+</script>
+
+{% endblock %}
+

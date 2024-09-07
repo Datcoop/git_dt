@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>
+        surcoop {% block title %}{% endblock %} | ai-bot
+    </title>
+<!--   -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    
+	<script src="https://kit.fontawesome.com/95cf76d125.js" crossorigin="anonymous"></script>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+     
+<!-- Fonts and icons  
+	<script src="/static/assets/webfont/webfont.min.js"></script>
+	<script>
+		WebFont.load({
+			google: {"families":["Lato:300,400,700,900"]},
+			custom: {"families":["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], 
+			urls: ['/static/assets/fonts/fonts.min.css']},
+			active: function() {
+				sessionStorage.fonts = true;
+			}
+		});
+	</script>       
+    <script src="/static/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+-->  
+ 
+             
+    <script src="/static/js/plugin/apifetch.js"></script>           
+    <script src="/static/js/sidebars.js"></script>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/sidebars.css">
+    <link rel="icon" href="/media/gallery/img/icon.ico" type="image/x-icon"/>
+    
+  </head>
+  <body>
+    {% include '_navbar.html' %}
+    
+    {% block content %}
+    {% endblock %}
+  </body>
+</html>
+
+    <!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+{% endblock javascripts %}

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block stylesheets %}
+
+<style type="text/css">
+    .container{
+      margin-top: 5rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .card{
+      margin: auto;
+    }
+</style>
+{% endblock stylesheets %}
+  
+{% block content %}
+
+<body>    
+    <div class="container center">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="pic" class="form-label">Upload Files Here</label>
+              <input id="pic" type="file" name="pic" placeholder="Título del archivo" class="form-control" multiple>
+            </div>
+            <button type="submit" class="btn btn-outline-primary ">Submit</button>
+        </form>
+    </div>
+</body>
+
+{% endblock %}
+
+{% block javascripts %}
+
+{% endblock javascripts %}
+<script>
+function ver_img() {
+  var img = window.open("", "", "width=400,height=400");
+}
+</script>

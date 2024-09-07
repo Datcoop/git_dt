@@ -1,0 +1,79 @@
+{% extends 'base.html' %} 
+
+{% load static %}
+
+{% block stylesheets %}
+
+{% endblock stylesheets %}
+
+{% block content %}
+<body>
+<main class="form-signin w-50 m-auto p-2">
+{% if msg %}
+    {% if archivo != '' %}
+        <div class="alert alert-success" role="alert">{{ msg }}
+            <a class="btn btn-success" href="/{{ archivo }}" target="_blank" download>Descargar<a/>
+        </div>
+        <div class="alert alert-info" role="alert"><i class="fa-solid fa-lightbulb-exclamation-on"></i><i class="fa-solid fa-triangle-exclamation"></i>
+            Este archivo sera borrado cuando usted inicie sesión nuevamente
+        </div>
+    {% else %}
+        <div class="alert alert-danger" role="alert"><i class="fa-solid fa-triangle-exclamation"></i></br>Error al unir los archivos PDF </div>
+    {% endif %} 
+{% endif %} 
+<form method="POST" id="frmconvert" enctype="multipart/form-data" class="form-control p-2 bg-light border" action="{% url 'subir_archivo' %}"> 
+    {% csrf_token %}
+    
+    <input type="hidden" id="ruta" name="ruta" value="Archivos">
+    <input type="hidden" id="url" name="url" value="{% url 'subir_archivo' %}">
+    <fieldset class="p-2">
+        <legend>Seleccione una opción:</legend>
+        
+        <div class="row p-1">
+        <div class="form-check form-switch col-4">
+            <input class="form-check-input" type="radio" id="unirpdf" name="archi" value="nomunir" checked />
+            <label for="unirpdf">Unir pdf</label>
+        </div>        
+        <div class="form-floating mb-3 col-8">
+            <input type="text" class="form-control" id="nomunir" name="nomunir" value="" placeholder="filename.pdf">
+            <label for="nomunir" class="p-3">Nombre de Archivo de salida</label>
+        </div>
+        </div>
+        <div class="row p-1">
+        <div class="form-check form-switch col-4">
+            <input class="form-check-input" type="radio" id="pdfexcel" name="archi" value="convexcel" />
+            <label for="pdfexcel">Convertir pdf a excel</label>
+        </div>
+        <div class="form-floating mb-3 col-8">
+            <input type="text" class="form-control" id="convexcel" name="convexcel" value="" placeholder="file.excel">
+            <label for="convexcel" class="p-3">Nombre de Archivo de salida</label>
+        </div>
+        </div>
+        <div class="row p-1">
+        <div class="form-check form-switch col-4">
+            <input class="form-check-input" type="radio" id="dtcoop" name="archi" value="convedacoop" />
+            <label for="dtcoop">Convertir excel a datacoop</label>
+        </div>
+        <div class="form-floating mb-3 col-8">
+            <input type="text" class="form-control" id="convedacoop" name="convedacoop" value="" placeholder="file.datacoop">
+            <label for="convedacoop" class="p-3">Nombre de Archivo de salida</label>
+        </div>
+        </div>
+        
+        <div class="row p-1">
+            <label for="pic" class="form-label p-1">Seleccione el archivo:</label>
+            <input type="file" id="pic" name="pic" class="form-control" placeholder="Título del archivo" multiple>
+        </div>
+</fieldset>
+            
+    <div class="row w-50 m-auto p-1">        
+        <span class="btn btn-primary p-1"><input type="submit" value="Subir a datacoop" class="btn btn-primary p-1" /><i class="fa fa-upload"></i></span>
+    </div>
+</form>
+</main>
+</body>
+
+{% endblock %}
+
+{% block javascript %}{% endblock %}
+

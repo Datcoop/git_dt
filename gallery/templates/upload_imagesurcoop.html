@@ -1,0 +1,45 @@
+{% extends 'base.html' %} {% block content %}
+
+
+{% if msg %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+
+  {{ msg }} <p>Ver imágen <a href="/media/img_surcoop/{{ image }}" onclick="ver_img()">aquí<a/>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif %}
+    
+<main class="form-signin w-50 m-auto p-2">
+  <h1>Subir imágen</h1>
+    <form action="{% url 'gallery:upload_image' redir='home' %}" method="post" enctype="multipart/form-data" class="form-control">
+      {% csrf_token %}        
+          
+      <input type="hidden" id="redir" name="redir" value="{{ proyectos.redir }}">
+          
+      <div class="col-md-12 p-1">
+          <input id="id_image" type="file" accept="image/*" name="image" class="btn btn-secondary" style="width: 460px" required>
+      </div>
+      <div class="col-md-12 p-1">
+        <div class="form-floating bg-light">
+          <input id="id_name" type="text" name="name" placeholder="Título de la imágen" class="form-control" required>
+          <label for="id_titulo">Título de la imágen</label>
+        </div>
+      </div>
+     
+      <div class="col-md-12 p-1 text-center"> 
+          <input type="submit" value="Subir imágen" class="btn btn-primary" />
+          <span class="btn-label p-1" style="font-size: 25px"><i class="fa fa-upload"></i></span>
+      </div>
+    </form>
+</main>
+
+{% endblock %}
+
+{% block javascripts %}
+
+{% endblock javascripts %}
+<script>
+function ver_img() {
+  var img = window.open("", "", "width=400,height=400");
+}
+</script>

@@ -1,0 +1,31 @@
+
+body
+{
+    font-family: "Oswald", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-stretch: normal;
+    font-optical-sizing: auto;
+    line-height: initial;
+    opacity: 1;
+    transition-duration: 350ms;
+}
+fieldset
+{
+    color: #46494a;
+}
+.navbar
+{
+    background-color: #014d80;
+}
+#navbarNav
+{ 
+    font-size: 18px;
+    font-weight: 400;
+}
+#frmconvert
+{ 
+    font-size: 16px;
+    font-weight: 300;
+}
+

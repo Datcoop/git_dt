@@ -1,0 +1,52 @@
+{% extends 'base.html' %} {% block content %}
+
+
+    
+<main class="form-signin w-50 m-auto p-2">
+  <h1>Formulario de Contacto</h1>
+  <form method="post" action=""  class="form-control p-2 bg-light border">
+    <div class="col-md-6 p-1">
+      <button type="submit" class="btn btn-primary">Enviar</button>
+    </div>
+
+                        {% csrf_token %}
+                        
+  <div class="form-row">
+    <div class="col-md-12 p-1">
+      <div class="form-floating bg-light">
+        {{ form.rif }}
+        <label for="rif">RIF</label>
+      </div>
+    </div>
+    <div class="col-md-12 p-1">
+      <div class="form-floating bg-light">
+        {{ form.nomorg }}
+        <label for="nomorg">Cooperativa</label>
+      </div>
+    </div>
+    <div class="col-md-12 p-1">
+      <div class="form-floating bg-light">
+        {{ form.telef }}
+        <label for="telefono">Número de teléfono</label>
+      </div>
+    </div>
+    <div class="col-md-12 p-1">
+      <div class="form-floating bg-light">
+        {{ form.correo }}
+        <label for="correo">ejemplo@gmail.com</label>
+      </div>
+    </div>
+    <div class="col-md-12 p-1">
+      <div class="form-floating bg-light">
+        {{ form.asunto }}
+        <label for="asunto">Asunto</label>
+      </div>
+    </div>
+    <div class="col-md-12 p-1">
+      {{ form.mensaje }}
+    </div>
+  </div>
+  </form>
+</main>
+
+{% endblock %}

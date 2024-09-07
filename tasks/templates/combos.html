@@ -1,0 +1,37 @@
+{% extends 'base.html' %} {% block content %}
+
+<h1>tasks</h1>
+
+<form method="POST" id="frmcombos" class="form-control p-2 bg-light border" action="{% url 'combos' %}"> 
+    {% csrf_token %}
+    
+    <input type="hidden" id="ruta" name="ruta" value="Archivos">
+    <input type="hidden" id="url" name="url" value="{% url 'subir_archivo' %}">
+    <fieldset class="p-2">
+        <legend>Seleccione una opción:</legend>
+       
+        <div class="row p-1">  
+             
+        <div class="form-floating mb-3 col-4">
+            <input type="text" class="form-control" id="numtbl" name="numtbl" placeholder="filename.pdf">
+            <label for="numtbl" class="p-3">Número de tabla</label>
+        </div>
+        <div class="form-floating mb-3 col-4">
+            <input type="text" class="form-control" id="nomtbl" name="nomtbl" placeholder="filename.pdf">
+            <label for="nomtbl" class="p-3">Nombre de tabla</label>
+        </div>
+        <div class="form-floating mb-3 col-4">
+            <input type="text" class="form-control" id="tittbl" name="tittbl" placeholder="filename.pdf">
+            <label for="tittbl" class="p-3">Título de tabla</label>
+        </div>
+        
+        <div>{{ task }}</div>
+        
+        </div>
+        
+    </fieldset><div class="row w-50 m-auto p-1">        
+        <span class="btn btn-primary p-1"><input type="submit" value="Crear combos" class="btn btn-primary p-1" /></span>
+    </div>
+</form>
+
+{% endblock %}

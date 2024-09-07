@@ -1,0 +1,87 @@
+
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <div class="container">
+    <a class="navbar-brand" href="/">Datacoop</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <input type="hidden" id="ruta" name="ruta" > 
+      <input type="hidden" id="nomdiv_eye" name="nomdiv_eye" >
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a href="/" class="nav-link">Inicio</a>
+        </li>
+        {% if user.is_authenticated %}
+          {% if request.session.user_list.1 == 1 %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'gallery:upload_image' redir='home' %}">Subir imágen</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'fichero:upload_file' redir='home' %}">Subir Archivo</a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'eximport' %}" class="nav-link">Movimientos</a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'combos' %}" class="nav-link">Combos</a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'usuario' %}" class="nav-link">Subir Usuario</a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'aplic:administrar' %}" class="nav-link">Administrar</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">Salir</a>
+            </li>
+          {% elif request.session.user_list.1 == 2 %}
+            <li class="nav-item">
+              <a href="{% url 'aplic:pages' 101 '1' %}" class="nav-link">Administrar</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'gallery:upload_image' redir='home' %}">Subir imágen</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'fichero:upload_file' redir='home' %}">Subir Archivo</a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'usuario' %}" class="nav-link">Archivo</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">Salir</a>
+            </li>
+          {% elif request.session.user_list.1 == 5 %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'gallery:upload_image' redir='home' %}">Subir imágen</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'fichero:upload_file' redir='home' %}">Subir Archivo</a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'eximport' %}" class="nav-link">Movimientos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">Salir</a>
+            </li>
+          {% endif %}
+        {% else %}
+        <li class="nav-item">
+          <a href="/signin" class="nav-link">Login</a>
+        </li>
+        <li class="nav-item">
+          <a href="/signup" class="nav-link">Registro</a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+
+{% block stylesheets %}
+    
+<style>
+    .m-e {
+        text-align: end;
+    }
+    .m-s {
+        margin-left: 0px;
+    }
+    
+    #tblbase {
+        position: relative;
+        z-index: 10;
+    }
+</style>
+     
+{% endblock stylesheets %}
+
+{% block content %}
+
+<body onload="llenarfld('{{ proyectos.url }}','frmparam','ini-0-0')">
+<div class="row sticky-top p-2 bg-light">   
+    <div class="col-1"><button class="btn btn-outline-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#busavan" aria-controls="busavan"><i class="fas fa-arrow-circle-right"></i></button>
+    </div>  
+    <p class="col-2" style="font-size: 12px">Bienvenid@. Usuario: {{ request.session.user_list.2 }} </p>
+    <div class="col-4" ><h5 class="card-title" id="tasacambio">Tasa de cambio BCV: {{ request.session.user_list.3 }} Bs/$.</h5></div><p class="col-4">Válida hasta las 9:00am del dia {{proyectos.ymdiasig}}</p>
+    
+    <div class="col-1" style="text-align: end;"><button class="btn btn-outline-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#system" aria-controls="system"><i class="fas fa-arrow-circle-left" ></i></button>
+    </div>  
+</div>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+  <div class="offcanvas-header">
+    <h5 id="offcanvasRightLabel">{{ proyectos.titulotbl }}</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body" id="divedit">
+    ...
+  </div>
+</div>
+<div class="col p-2">
+        
+        <div class="row card-body">
+            <div class="row" id="msg"></div>
+            {% if request.session.user_list.1 == 5 %} 
+    <div class="{{ request.session.user_list.5 }} p-2" role="alert">{{ request.session.user_list.6 }}. Monto total a pagar: {{ request.session.user_list.7 }} Bs.</div>
+            {% endif %}
+            <h5 class="card-title col-6 text-end p-2">{{ proyectos.titulotbl }}</h5>
+            {% if request.session.user_list.1 != 1 and proyectos.num != 98  %}
+            <span class=" col-2 p-2"><button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" onclick="llenarfld('/tasks/pages/{{ proyectos.num }}/8','frmparam','add-{{ proyectos.numreg }}-add')">Agregar<i class="fa fa-plus-circle p-1"></i></button></span>
+            {% elif request.session.user_list.1 != 1 and proyectos.num == 98 %}
+            <span class=" col-2 p-2></span>
+            {% endif %}
+            <span class=" col-2 p-2"><a class="btn btn-primary" href="/tasks/pages/{{ proyectos.num }}/1">Recargar<i class="fas fa-redo-alt"></i></a></span>
+        </div>
+        
+        <form method="post" id="frmparam" enctype="multipart/form-data">
+    <div class="card">
+        <div class="card-header">
+            <div class="row card-header">
+                <div class="col-3">
+                    <div class="form-floating">
+                        <select class="form-select" aria-label="Número de filas a mostrar" id="regxpag" name="regxpag" onchange="llenarfld('/tasks/pages/{{ proyectos.num }}/1','frmparam', 'lim-10-lim')" style="cursor: pointer" required>
+                            <option selected>Número de filas a mostrar</option>
+                            <option>5</option>
+		                    <option selected>10</option>
+		                    <option>25</option>
+		                    <option>50</option>
+		                    <option>100</option>
+                        </select>
+                        <label for="contentbl">Mostrando<span id = "mostrar">{{ proyectos.limite }}</spa></label>
+                     </div>
+                </div>
+            </div>
+        </div>
+        
+	        <input type="hidden" id="numero" name="numero" value="{{ proyectos.num }}" />
+	        <input type="hidden" id="url" name="url" value="{{ proyectos.url }}" />
+	        <input type="hidden" id="idres" name="idres" value="listado" />
+	        <input type="hidden" id="fldbus" name="fldbus" value="1" />
+	        <input type="hidden" id="fldord" name="fldord" value="0" />
+	        <input type="hidden" id="pagant" name="pagant" value="1">
+	        <input type="hidden" id="accion" name="accion" value="5">
+	        <input type="hidden" id="indice" name="indice" value="1" />
+	        <input type="hidden" id="limite" name="limite" value="10" />
+	        <input type="hidden" id="param" name="param" />
+	        <input type="hidden" id="argprm" name="argprm" />
+	        <input type="hidden" id="boxizq1" name="boxizq1" value=""/>
+	        <input type="hidden" id="boxder1" name="boxder1" value=""/>
+	        <input type="hidden" id="arrwer" name="arrwer" value="{{ proyectos.valwhere }}"/>		
+	        <input type="hidden" id="valwhere" name="valwhere" value="{{ proyectos.valwhere }}"/>
+	        <input type="hidden" id="paramfil" name="paramfil" value="1,0,5,1,1,10"/> 
+	        <input type="hidden" id="numpags" name="numpags" value="0"/>    
+	        <input type="hidden" id="irpag" name="irpag" value="1"/>      
+	        <input type="hidden" id="ordpage" name="ordpage" value="ord-0-sort"/>  
+	        <input type="hidden" id="listfil" name="listfil" value="true" />       
+	        <input type="hidden" id="valup" name="valup" />             
+	        <input type="hidden" id="ascdesc" name="ascdesc" value="ASC" />       
+	        <input type="hidden" id="candias" name="candias" />                   
+        </form>
+        <div id="listado" class="p-1"></div>
+    </div>
+        <div id="paginas" class="row p-3 bg-light"></div>
+</div>
+
+<div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="busavan" aria-labelledby="busavanLabel" style="width: 320px;">
+  <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasAvanLabel">Búsqueda Avanzada</h5><i class="fa fa-window-close" aria-hidden="true" data-bs-dismiss="offcanvas" aria-label="Close" style="cursor: pointer; font-size: 30px"></i>
+  </div>
+  <div class="offcanvas-body">
+     <div class="flex-shrink-0 p-3 bg-white card card-body" style="width: 290px;">
+        {% include 'avanz.html' %}
+      </div>
+   </div>
+</div>
+     
+<div class="offcanvas offcanvas-end" tabindex="-1" id="system" aria-labelledby="offcanvasAvanLabel" style="width: 320px;">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasAvanLabel">Administrar</h5><i class="fa fa-window-close" aria-hidden="true" data-bs-dismiss="offcanvas" aria-label="Close" style="cursor: pointer; font-size: 30px"></i>
+        </div>
+        <div class="offcanvas-body">
+         <div class="flex-shrink-0 p-3 bg-white card card-body" style="width: 290px;">
+           <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
+             <svg class="bi pe-none me-2" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
+             <span class="fs-5 fw-semibold">Sistema</span>
+           </a>
+           <ul class="list-unstyled ps-0">
+             <li class="mb-1">
+               <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse-frec" aria-expanded="false">
+                 Frecuentes
+               </button>
+               <div class="collapse" id="home-collapse-frec" style="">
+                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                     {% if request.session.user_list.1 == 2 %}
+			         <li>
+				       <a href="{% url 'aplic:pages' 140 '1' %}" class="link-dark d-inline-flex text-decoration-none rounded">
+				         Socios
+				       </a>	
+			         </li>		
+			         <li>
+				       <a href="{% url 'aplic:pages' 101 '1' %}" class="link-dark d-inline-flex text-decoration-none rounded">
+				         Movimientos Cooperativa
+				       </a>	
+			         </li>	
+                     {% elif request.session.user_list.1 == 5 %}
+			         <li>
+				       <a href="{% url 'aplic:pages' 103 '1' %}" class="link-dark d-inline-flex text-decoration-none rounded">
+				         Movimientos
+				       </a>	
+			         </li>
+			         {% endif %}
+		         </ul>
+               </div>
+             </li>
+           </ul>
+           <ul class="list-unstyled ps-0">
+             <li class="mb-1">
+               <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false">
+                 Todo el Sistema
+               </button>
+               <div class="collapse" id="home-collapse" style="">
+                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+		           {% for i,fila in proyectos.items %}
+		             {% if i == 'tbladmin' %}
+                       {% for value in fila %}                       
+			         <li>
+				       <a href="{% url 'aplic:pages' value.0 value.2 %}" class="link-dark d-inline-flex text-decoration-none rounded">
+				         {{value.1}}
+				       </a>	
+			         </li>		
+			           {% endfor %}
+			         {% endif %}							    	
+		           {% endfor %}		
+		         </ul>
+               </div>
+             </li>
+           </ul>
+         </div>
+      </div>
+
+</body>
+
+{% endblock %}

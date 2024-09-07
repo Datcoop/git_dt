@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  {% if form.errors %}
+    <p class="p-5">Su nombre de usuario y contraseña no coinciden. Inténtalo de nuevo.</p>
+  {% endif %}
+
+  {% if next %}
+    {% if user.is_authenticated %}
+      <p class="p-5">Su cuenta no tiene acceso a esta página. Para continuar,
+      inicie sesión con una cuenta que tenga acceso.</p>
+    {% else %}
+      <p class="p-5">Por favor inicie sesión para ver esta página.</p>
+    {% endif %}
+  {% endif %}
+
+  <main class="form-signin w-50 m-auto p-2">
+  <h2 style="text-align: center;">Presentación de Credenciales</h2>
+
+  <form method="post" action="{% url 'aplic:login_view' %}"  class="form-control p-2 bg-light border" id="frmsignin">
+
+                        {% csrf_token %}
+                        
+  <div class="form-row g-4 mt-1"> 
+    <div class="col-md-12 p-1">
+	  <div class="col-md"> 
+        <div class="input-group mb-3"> 
+          <div class="input-group-prepend">
+            <span class="input-group-text btn btn-secondary p-3"><i class="fas fa-user"></i>
+            </span>
+          </div>
+          <div class="form-floating bg-light">
+           <input type="text" class="form-control" name="username" id="nu" placeholder="Usuario" required >
+           <label for="nu">Usuario</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12 p-1">
+	  <div class="col-md"> 
+        <input type="hidden" id="param" name="param" />
+      <input type="hidden" id="frm" name="frm" value="frmsignin"/>
+        <div class="input-group mb-3" id="div_eye"> 
+          <span class="input-group-text btn btn-secondary" style="padding: 15px; font-size: 17px;"><i class="fa fa-lock"></i></span>
+          <div class="form-floating" id="pw">
+           <input type="password" class="form-control" name="password" id="pu" placeholder="Password" required>
+            <label for="pu">Contraseña</label>
+          </div>
+          <div class="input-group-prepend" id="faeye">
+            <span class="input-group-text btn btn-secondary" style="padding: 15px; font-size: 17px; cursor: pointer;" data-bs-toggle="tooltip" data-bs-placement="top" title="Mostrar Contraseña" onclick="llenarfld('/util/0/fas fa-eye','frmsignin', 'fas fa-eye')"><i class="fas fa-eye"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2 m-auto">
+      <button type="submit" class="btn btn-primary" id="idlog">Aceptar</button>
+    </div>
+  </div>
+  
+  </form>
+
+  {# Asume que configura la vista de restablecimiento de contraseña en su URLconf #}
+  <div class="col-md-12 m-auto p-2">
+      <a href="{% url 'password_reset' %}">Olvidó su contraseña?</a>
+  </div>
+</main>
+
+{% endblock %}
+
+

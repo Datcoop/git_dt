@@ -1,0 +1,286 @@
+
+{% extends "layouts/layout.html" %}
+
+{% block title %} UI Datatables {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+<style>
+    .wth {
+        width: 30px;
+    }
+</style>
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<body onload="llenartip('{{ proyectos.tipuser }}')">
+
+    <div class="page-inner">
+        <div class="page-header">
+            <h4 class="page-title">Registrarse</h4>
+            <ul class="breadcrumbs">
+                <li class="nav-home">
+                    <a href="#">
+                        <i class="flaticon-home"></i>
+                    </a>
+                </li>
+                <li class="separator">
+                    <i class="flaticon-right-arrow"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="#">Authentication</a>
+                </li>
+                <li class="separator">
+                    <i class="flaticon-right-arrow"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="#">Register</a>
+                </li>
+            </ul>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+
+                            {% if msg %}
+                                <span style="color: rgb(93, 155, 214);">{{ msg | safe }}</span>
+                            {% else %}
+                            <span>
+                                Complete sus Credenciales 
+                            </span>
+                            {% endif %}
+
+                        </div>
+                    </div>
+
+                    <form method="post" action="" style="background-color: rgb(46, 54, 63);" id="frmparamreg">
+
+                        {% csrf_token %}
+                        
+                        <input type="hidden" id="tipuser" name="tipuser"/>
+
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6 col-lg-4">
+
+                                    <div class="form-group">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="icon-user"></i>
+                                                </span>
+                                            </div>
+                                            {{ form.username }}
+                                        </div>
+                                    </div>
+                                    <span class="text-danger">{{ form.username.errors }}</span>
+
+                                    <div class="form-group">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="icon-envelope"></i>
+                                                </span>
+                                            </div>
+                                            {{ form.email }}
+                                        </div>
+                                    </div>
+                                    <span class="text-danger">{{ form.email.errors }}</span>
+
+                                    <div class="form-group">
+                                        <div class="input-group mb-4">
+                                            <div class="input-group-prepend cursor-pointer" onclick="mospsw('password1','pweye1')">
+                                                <span class="input-group-text">
+                                                    <i id="pweye1" class="fa fa-eye-slash" style="cursor: pointer;"></i>
+                                                </span>
+                                            </div>
+                                            {{ form.password1 }}
+                                        </div>
+                                    </div>
+                                    <span class="text-danger">{{ form.password1.errors }}</span>
+
+                                    <div class="form-group">
+                                        <div class="input-group mb-4">
+                                            <div class="input-group-prepend cursor-pointer" onclick="mospsw('password2','pweye2')">
+                                                <span class="input-group-text">
+                                                    <i id="pweye2" class="fa fa-eye-slash" style="cursor: pointer;"></i>
+                                                </span>
+                                            </div>
+                                            {{ form.password2 }}
+                                        </div>
+                                    </div>
+                                    <span class="text-danger">{{ form.password2.errors }}</span>
+
+                                    <div class="form-group" style="width: 500px;">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend" data-toggle="modal"
+                                            data-target="#listorgModal" style="cursor: pointer;">
+                                                <span class="input-group-text" style="background-color: rgb(63, 81, 107);color: #fff;" >
+                                                    <i class="fa fa-search icon-search"></i>
+                                                </span>
+                                            </div>
+                                            {{ form.nomorg }}
+                                            {{ form.pag }}
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-action">
+                            <button type="submit" class="btn btn-success">Enviar</button>
+                            &nbsp; &nbsp;
+                            <span style="color: rgb(212, 197, 197);">Si ya está registrado, </span> <a href="/login/{{ proyectos.tipuser }}" style="color: rgb(93, 155, 214);font-weight: bold;" >Login</a>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <!-- Modal -->
+                        <div class="modal fade" id="listorgModal" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="panel-header bg-primary-gradient text-white p-3">
+                                        <h4 style="font-size: 20px;text-align: center;">
+                                            Listado de cooperativas u organizaciones
+                                        </h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p class="p-3 bg-dark text-white" style="font-size: 15px;font-weight: bold;text-align: center;">Seleccione la cooperativa u organización de su preferencia</p>
+                                        <div class="table-responsive">
+                                            <input type="hidden" id="numero" value="{{ tabla.numtbl }}" >
+                                            <input type="hidden" id="numorg" name="numorg" >
+                                            <table id="listorg" class="display nowrap table-striped table-hover" style="width: 100%;" >
+                                                <thead>
+                                                    <tr>
+                                                        {% for titulo in tabla.campostitulos %}
+                                                            <th>{{ titulo }}</th>
+                                                        {% endfor %}
+                                                        <th>
+                                                        <td><input class="form-radio-input" type="radio" name="org" vale="1" >
+                                                            <span class="form-radio-sign"></span>
+                                                            <input type="hidden" name="numtbls" id="numtbls{{fldsel.0}}" value="{{fldsel.0}}">
+                                                        </td></th>
+                                                    </tr>
+                                                </thead>
+                                                <tfoot>
+                                                    <tr>
+                                                        {% for titulo in tabla.campostitulos %}
+                                                        <th>{{ titulo }}</th>
+                                                        {% endfor %}
+                                                        <th></th>
+                                                    </tr>
+                                                </tfoot>
+                                                <tbody>
+                                                    {% for fldsel in tabla.data %}
+                                                    <tr>
+                                                        {% for j in fldsel %}
+                                                            <td>{{ j }}</td>
+                                                        {% endfor %}
+                                                        <td><input class="form-radio-input" type="radio" name="org" value="{{fldsel.1}}" id="org{{fldsel.0}}">
+                                                            <span class="form-radio-sign"></span>
+                                                            <input type="hidden" name="numtbls{{fldsel.0}}" id="numtbls{{fldsel.0}}" value="{{fldsel.0}}">
+                                                        </td>
+                                                    </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer no-bd">
+                                        <button type="button" id="selectorg" class="btn btn-primary">Aceptar</button>
+                                        <button type="button" class="btn btn-danger"
+                                            data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<script src="/static/js/plugin/classList.min.js"></script>
+<script src="/static/js/plugin/apifetch.js"></script>
+<script >
+
+    $(document).ready(function() {
+
+        var tblorg =  $('#listorg').DataTable();
+
+        $('input[name=org]').on('click', function(){
+            
+            var getorg = $('input[name=org]:checked').val();
+            $('#namorg').val(getorg);
+
+            $('#nampag').val(this.id);
+            //alert($('#nampag').val())
+
+            $('#listorgModal').modal('hide');
+
+        });
+
+        $('#multi-filter-select').DataTable( {
+            "pageLength": 5,
+            initComplete: function () {
+                this.api().columns().every( function () {
+                    var column = this;
+                    var select = $('<select class="form-control"><option value=""></option></select>')
+                    .appendTo( $(column.footer()).empty() )
+                    .on( 'change', function () {
+                        var val = $.fn.dataTable.util.escapeRegex(
+                            $(this).val()
+                            );
+
+                        column
+                        .search( val ? '^'+val+'$' : '', true, false )
+                        .draw();
+                    } );
+
+                    column.data().unique().sort().each( function ( d, j ) {
+                        select.append( '<option value="'+d+'">'+d+'</option>' )
+                    } );
+                } );
+            }
+        });
+
+        // Add Row
+        $('#add-row').DataTable({
+            "pageLength": 5,
+        });
+
+        $('#selectorg').click(function() {
+            $('#add-row').dataTable().fnAddData([
+                $("#addName").val(),
+                $("#addPosition").val(),
+                $("#addOffice").val(),
+            ]);
+
+            $('#listorgModal').modal('hide');
+
+        });
+
+    });
+</script>
+
+{% endblock javascripts %}
